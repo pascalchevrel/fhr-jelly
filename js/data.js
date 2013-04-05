@@ -77,7 +77,7 @@ calculateTotalTime = function(healthreport, historically) {
 },
 getLastCrashDate = function(days) {
     var sortedDates = sortDates(days, true),
-        lastCrashDate = 'No crashes recorded';
+        lastCrashDate = 'Never';
 
     // Loop through the dates from latest to eldest.
     for(var day in sortedDates) {
@@ -374,6 +374,11 @@ var populateData = function(healthreport) {
 
     plugins.push(pluginsInfo.enabled);
     plugins.push(pluginsInfo.disabled);
+
+    // Hide last crash list item if there was no crash
+    if (getLastCrashDate(healthreport.data.days) == 'Never') {
+        document.getElementById('last_crash').style.display = 'none';
+    }
 
     // Populate vital statistics
     vitalStatsValueContainers.each(function(index) {
